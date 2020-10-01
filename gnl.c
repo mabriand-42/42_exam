@@ -6,7 +6,7 @@
 /*   By: mabriand <mabriand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 12:02:57 by mabriand          #+#    #+#             */
-/*   Updated: 2020/09/17 12:11:29 by mabriand         ###   ########.fr       */
+/*   Updated: 2020/10/01 14:30:51 by mabriand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-char	*ft_recursive(int depth, int *ret, int fd)
+char	*ft_recursive(int fd, int *ret, int depth)
 {
 	char	buf[1];
 	char	*out;
@@ -32,11 +32,11 @@ char	*ft_recursive(int depth, int *ret, int fd)
 		*ret = 1;
 		if (buf[0] == '\0')
 			*ret = 0;
-		return (out);
+		//return (out);
 	}
 	else
 	{
-		if (!(out = ft_recursive(depth + 1, ret, fd)))
+		if (!(out = ft_recursive(fd, ret, depth + 1)))
 			return (0);
 		out[depth] = buf[0];
 	}
@@ -48,7 +48,7 @@ int		get_next_line(int fd, char **out)
 	int	ret;
 
 	ret = 1;
-	*out = ft_recursive(0, &ret, fd);
+	*out = ft_recursive(fd, &ret, 0);
 	return (ret);
 }
 
@@ -58,8 +58,9 @@ int		main(void)
 	int		fd;
 	char	*line;
 
-	if ((fd = open("test.txt", O_RDONLY)) == -1)
-		return (0);
+	/*if ((fd = open("test.txt", O_RDONLY)) == -1)
+		return (0);*/
+	fd = 0;
 	line = NULL;
 	while ((r = get_next_line(fd, &line)) > 0)
 	{
