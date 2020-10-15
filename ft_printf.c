@@ -24,15 +24,16 @@ int		ft_printf(const char *str, ...)
 		{
 			flag = ft_get_flag((char *)str, &i);
 			if(str[i] == 's')
-			{	ret += ft_put_s(flag, &ap);
+			{	printed += ft_put_s(flag, &ap);
 
 			}
 			if(str[i] == 'd')
-			{	ret += ft_put_d(flag, &ap);
+			{	printed += ft_put_d(flag, &ap);
 
 			}
 			if(str[i] == 'x')
-			{	ret += ft_put_x(flag, &ap);
+			{
+				printed += ft_put_x(flag, &ap);
 
 			}
 		}
@@ -66,13 +67,16 @@ int		ft_is_arg(char *str)
 	i = 0;
 	while (str[i] >= '0' && str[i] <= '9')
 		i++;
-	if (str[i++] == '.')
+	if (str[i] == '.')
 	{
+		i++;
 		while (str[i] >= '0' && str[i] <= '9')
 			i++;
 	}
 	if (str[i] == 's' || str[i] == 'd' || str[i] == 'x')
+	{
 		return (1);
+	}
 	return (0);
 }
 
@@ -105,23 +109,13 @@ t_flag	ft_get_flag(char *str, int *pos)
 int	main()
 {
 	int ret = 0;
-	ret = ft_printf("salutsalut%23.4d%30.7s    %x|\n", 214, "i42424242424224242424242424242424242", 785);
+	ret = ft_printf("salutsalut%.4d%300.7s    %5.6x|\n", 214, "i42424242424224242424242424242424242", 785);
 	printf("ret = %d\n", ret);
-	ret = printf("salutsalut%23.4d%30.7s    %x|\n", 214, "i42424242424224242424242424242424242", 785);
-	printf("printf ret = %d\n", ret);
-	printf("------------------------------\n");
-	ret = ft_printf("salutsalut%23.4d%3.7s    %x|\n", 214, "i42424242424224242424242424242424242", 785);
-	printf("ret = %d\n", ret);
-	ret = printf("salutsalut%23.4d%3.7s    %x|\n", 214, "i42424242424224242424242424242424242", 785);
+	ret = printf("salutsalut%.4d%300.7s    %5.6x|\n", 214, "i42424242424224242424242424242424242", 785);
 	printf("printf ret = %d\n", ret);
 	printf("------------------------------\n");
 	ret = ft_printf("");
 	printf("ret = %d\n", ret);
 	ret = printf("");
 	printf("printf ret = %d\n", ret);
-
-	printf("==============================\n");
-	ft_putnbr_d(69);
-	printf("\n");
-	ft_putnbr_x(785);
 }
