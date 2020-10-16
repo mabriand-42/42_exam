@@ -7,12 +7,13 @@ int		ft_printf(const char *str, ...)
 
 	int i;
 	int printed;
-	int	ret;
+	//int	ret;
 
 	i = 0;
 	va_start(ap, str);
 	printed = 0;
-	ret = ft_search((char *)str);
+	flag.f = 0;
+	//ret = ft_search((char *)str);
 	while (str[i])
 	{
 		if (str[i]!= '%')
@@ -24,7 +25,8 @@ int		ft_printf(const char *str, ...)
 		{
 			flag = ft_get_flag((char *)str, &i);
 			if(str[i] == 's')
-			{	printed += ft_put_s(flag, &ap);
+			{	
+				printed += ft_put_s(flag, &ap);
 
 			}
 			if(str[i] == 'd')
@@ -43,7 +45,7 @@ int		ft_printf(const char *str, ...)
 	return (printed);
 }
 
-int		ft_search(char *str)
+/*int		ft_search(char *str)
 {
 	int i;
 
@@ -58,7 +60,7 @@ int		ft_search(char *str)
 		i++;
 	}
 	return (0);
-}
+}*/
 
 int		ft_is_arg(char *str)
 {
@@ -98,10 +100,11 @@ t_flag	ft_get_flag(char *str, int *pos)
 		(*pos)++;
 		while (str[*pos] >= '0' && str[*pos] <= '9')
 		{
-		flag.preci *= 10;
-		flag.preci += str[*pos] - 48;
-		(*pos)++;
+			flag.preci *= 10;
+			flag.preci += str[*pos] - 48;
+			(*pos)++;
 		}
+		flag.f = 1;
 	}
 	return (flag);
 }
@@ -109,9 +112,9 @@ t_flag	ft_get_flag(char *str, int *pos)
 int	main()
 {
 	int ret = 0;
-	ret = ft_printf("salutsalut%.4d%300.7s    %5.6x|\n", 214, "i42424242424224242424242424242424242", 785);
+	ret = ft_printf("salutsalut %4.5s = %d\n", "   mariebriand", 42);
 	printf("ret = %d\n", ret);
-	ret = printf("salutsalut%.4d%300.7s    %5.6x|\n", 214, "i42424242424224242424242424242424242", 785);
+	ret = printf("salutsalut %4.5s = %d\n", "   mariebriand", 42);
 	printf("printf ret = %d\n", ret);
 	printf("------------------------------\n");
 	ret = ft_printf("");

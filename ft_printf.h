@@ -10,6 +10,7 @@ typedef	struct	s_flag
 {
 	int	width;
 	int	preci;
+	int	f;
 }				t_flag;
 
 /*

@@ -19,13 +19,19 @@ int		ft_put_s(t_flag flag, va_list *ap)
 		w = flag.width - p;
 	else
 		w = 0;
-	i = w + p;
+	if (flag.f == 1)
+		i = w + p;
+	else
+		i = w + size;
 	while (w > 0)
 	{
 		write(1, " ", 1);
 		w--;
 	}
-	write(1, s, p);
+	if (flag.f == 1)
+		write(1, s, p);
+	else
+		write(1, s, size);
 	return (i);
 }
 
