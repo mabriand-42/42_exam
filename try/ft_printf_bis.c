@@ -1,28 +1,28 @@
 #include "ft_printf.h"
 
-int		ft_put_s(t_flag flag, va_list *ap)
+int	ft_put_s(t_flag flag, va_list *ap)
 {
-
 	char	*s;
 	int		size;
-	int		w;
-	int		p;
 	int		len;
+	int 	w;
+	int		p;
 
 	s = va_arg(*ap, char *);
 	size = ft_strlen(s);
-	if (flag.preci < size)
-		p = flag.preci;
-	else
+	len = 0;
+	if (flag.preci >= size)
 		p = size;
-	if (flag.width > p)
-		w = flag.width - p;
 	else
+		p = flag.preci;
+	if (flag.width <= p)
 		w = 0;
-	if (flag.f == 1)
-		len = w + p;
 	else
-		len = w + size;
+		w = flag.width - p;
+	if (flag.f == 1)
+	 	len = p + w;
+	else
+		len = size + w;
 	while (w > 0)
 	{
 		write(1, " ", 1);
@@ -35,26 +35,26 @@ int		ft_put_s(t_flag flag, va_list *ap)
 	return (len);
 }
 
-int		ft_put_d(t_flag	flag, va_list *ap)
+int	ft_put_d(t_flag flag, va_list *ap)
 {
 	int	nbr;
 	int size;
+	int len;
 	int w;
 	int p;
-	int len;
 
 	nbr = va_arg(*ap, int);
 	size = ft_nbrlen_d(nbr);
-	p = 0;
 	w = 0;
+	p = 0;
 	len = 0;
 	if (flag.preci > size)
 		p = flag.preci - size;
 	if (flag.width > (p + size))
 		w = flag.width - (p + size);
 	len = w + p + size;
-	if (nbr < 0 && w)
-		w -= 1;
+	if (nbr < 0)
+		w--;
 	while (w > 0)
 	{
 		write(1, " ", 1);
@@ -63,7 +63,7 @@ int		ft_put_d(t_flag	flag, va_list *ap)
 	if (nbr < 0)
 	{
 		write(1, "-", 1);
-		len++;
+		len ++;
 	}
 	while (p > 0)
 	{
@@ -74,21 +74,22 @@ int		ft_put_d(t_flag	flag, va_list *ap)
 	return (len);
 }
 
-int		ft_put_x(t_flag	flag, va_list *ap)
+int	ft_put_x(t_flag flag, va_list *ap)
 {
-	int	nbr;
-	int size;
-	int w;
-	int p;
-	int len;
+	unsigned int	nbr;
+	int				size;
+	int 			len;
+	int 			w;
+	int 			p;
 
 	nbr = va_arg(*ap, unsigned int);
 	size = ft_nbrlen_x(nbr);
-	p = 0;
 	w = 0;
+	p = 0;
+	len = 0;
 	if (flag.preci > size)
 		p = flag.preci - size;
-	if (flag.width > p + size)
+	if (flag.width > (p + size))
 		w = flag.width - (p + size);
 	len = w + p + size;
 	while (w > 0)
@@ -101,6 +102,7 @@ int		ft_put_x(t_flag	flag, va_list *ap)
 		write(1, "0", 1);
 		p--;
 	}
+	printf("len is = %d\n",len);
 	ft_putnbr_x(nbr);
 	return (len);
 }

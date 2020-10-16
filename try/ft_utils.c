@@ -1,100 +1,93 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_utils.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mabriand <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/14 15:31:51 by mabriand          #+#    #+#             */
-/*   Updated: 2020/10/14 16:46:29 by mabriand         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "ft_printf.h"
 
-int		ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
 	int i;
-	i = 0;
 
-	while (str[i] != '\0')
+	i = 0;
+	while (str[i])
 		i++;
-	return (i);
+	return(i);
 }
 
-int		ft_nbrlen_d(int n)
+int	ft_nbrlen_d(int nbr)
 {
 	int i;
 
 	i = 0;
 	if (!n)
-		return (0);
+		return (1);
 	if (n == -2147483648)
-		return (10);	
+		return (10);
 	if (n < 0)
 		n *= -1;
-	while (n)
+	while (nbr > 0)
 	{
-		n /= 10;
+		nbr /= 10;
 		i++;
 	}
 	return (i);
 }
 
-int		ft_nbrlen_x(unsigned int n)
+int	ft_nbrlen_x(unsigned int nbr)
 {
 	int i;
 
+	i = 0;
 	if (!n)
-		return (0);
-	while (n)
+		return (1);
+	while (nbr > 0)
 	{
-		n /= 16;
+		nbr /= 16;
 		i++;
 	}
 	return (i);
 }
 
-void	ft_putnbr_d(int n)
+void	ft_putnbr_d(int nbr)
 {
 	int		x;
-	char	c;
+	char 	c;
+	char	*base;
 
 	x = 1;
-	c = 48;
-	if (n == -2147483648)
-	{	
+	c = '0';
+	base = "0123456789";
+	if (nbr == -2147483648)
+	{
 		write(1, "2147483648", 10);
 		return ;
 	}
-	if (n < 0)
-		n *= -1;
-	while ((n / x) >= 10)
-		x*= 10;
-	while (x)
+	if (nbr < 0)
+		nbr *= -1;
+	while (nbr / x >= 10)
+		x *= 10;
+	while (x > 0)
 	{
-		c = (n / x + 48);
-		write(1, &c,1);
-		n %= x;
+		c = base[nbr/x];
+		write(1, &c, 1);
+		nbr %= x;
 		x /= 10;
 	}
 	return ;
 }
 
-void	ft_putnbr_x(unsigned int n)
+void	ft_putnbr_x(unsigned int nbr)
 {
-	unsigned int	x;
-	char			c;
-	char			*base;
+	int		x;
+	char	c;
+	char	*base;
 
 	x = 1;
-	c = 48;
+	c = '0';
 	base = "0123456789abcdef";
-	while((n / x) >= 16)
+	while (nbr / x >= 16)
 		x *= 16;
-	while(x)
+	while (x > 0)
 	{
-		c = base[n/x];
-		write(1, &c, 10);
-		n %= x;
+		c = base[nbr/x];
+		write(1, &c, 1);
+		nbr %= x;
 		x /= 16;
 	}
 	return ;
