@@ -1,23 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabriand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/19 12:02:57 by mabriand          #+#    #+#             */
+/*   Updated: 2020/10/19 13:44:56 by mabriand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+int		ft_printf(const char *str, ...)
 {
 	va_list	ap;
-	int		printed;
 	int		i;
-	t_flag flag;
+	int		printed;
+	t_flag	flag;
 
 	va_start(ap, str);
-	printed = 0;
 	i = 0;
-	while (str[i])
+	printed = 0;
+	while (str[i] != '\0')
 	{
 		if (str[i] != '%')
 		{
 			write(1, &str[i], 1);
 			printed++;
 		}
-		else if (ft_is_arg((char *)str + i + 1))
+		else if (ft_isarg((char *)str + i + 1))
 		{
 			flag = ft_get_flag((char *)str, &i);
 			if (str[i] == 's')
@@ -29,11 +41,10 @@ int	ft_printf(const char *str, ...)
 		}
 		i++;
 	}
-	va_end(ap);
 	return (printed);
 }
 
-int	ft_is_arg(char *str)
+int		ft_isarg(char *str)
 {
 	int i;
 
@@ -47,11 +58,11 @@ int	ft_is_arg(char *str)
 			i++;
 	}
 	if (str[i] == 's' || str[i] == 'd' || str[i] == 'x')
-			return (1);
+		return (1);
 	return (0);
 }
 
-t_flag	ft_get_flag(char *str, int *pos)
+t_flag		ft_get_flag(char *str, int *pos)
 {
 	t_flag flag;
 
@@ -62,7 +73,7 @@ t_flag	ft_get_flag(char *str, int *pos)
 	while (str[*pos] >= '0' && str[*pos] <= '9')
 	{
 		flag.width *= 10;
-		flag.width += str[*pos] - '0';
+		flag.width += str[*pos] - 48;
 		(*pos)++;
 	}
 	if (str[*pos] == '.')
@@ -71,7 +82,7 @@ t_flag	ft_get_flag(char *str, int *pos)
 		while (str[*pos] >= '0' && str[*pos] <= '9')
 		{
 			flag.preci *= 10;
-			flag.preci += str[*pos] - '0';
+			flag.preci += str[*pos] - 48;
 			(*pos)++;
 		}
 		flag.f = 1;
@@ -79,16 +90,4 @@ t_flag	ft_get_flag(char *str, int *pos)
 	return (flag);
 }
 
-int	main()
-{
-	int ret = 0;
-	ret = ft_printf("salutsalut %x\n", -98);
-	printf("ret = %d\n", ret);
-	ret = printf("salutsalut %x\n", -98);
-	printf("printf ret = %d\n", ret);
-	printf("------------------------------\n");
-	ret = ft_printf("");
-	printf("ret = %d\n", ret);
-	ret = printf("");
-	printf("printf ret = %d\n", ret);
-}
+
