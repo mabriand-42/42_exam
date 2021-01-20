@@ -33,7 +33,7 @@ int		ft_printf(const char *str, ...)
 	return (printed);
 }
 
-int		ft_is_arg(char *str)
+int		ft_isflag(char *str)
 {
 	int i;
 
