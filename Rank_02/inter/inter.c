@@ -1,5 +1,4 @@
 #include <unistd.h>
-#include <stdio.h>
 
 int     ft_isalready(char c, char *str, int pos)
 {
@@ -30,7 +29,6 @@ void    ft_inter(char *s1, char *s2)
             if (s1[i] == s2[j] && ft_isalready(s1[i], s1, i) == 0)
             {
                 write(1, &s1[i], 1);
-                //j = 0;
                 break;
             }
             else
@@ -38,16 +36,14 @@ void    ft_inter(char *s1, char *s2)
         }
         i++;
     }
-    write(1, "\n", 1);
     return ;
 }
 
 
 int     main (int argc, char **argv)
 {
-    if (argc != 3)
-        write(1, "\n", 1);
-    else
+    if (argc == 3)
         ft_inter(argv[1], argv[2]);
+    write(1, "\n", 1);
     return (0);
 }
