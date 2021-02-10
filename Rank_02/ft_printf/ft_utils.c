@@ -55,9 +55,8 @@ void    ft_putnbr_d(int n)
     div = 1;
     c = 48;
     base = "0123456789";
-
     if (!n)
-		write(1, "0", 1);
+		write(1, &c, 1);
     else if (n == -2147483648)
         write(1, "2147483648", 10);
     else
@@ -91,9 +90,8 @@ void    ft_putnbr_x(unsigned int n)
     div = 1;
     c = 48;
     base = "0123456789abcdef";
-
     if (!n)
-		write(1, "0", 1);
+		write(1, &c, 1);
     else
     {
         while (len > 1)
