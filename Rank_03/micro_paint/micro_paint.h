@@ -26,11 +26,12 @@ typedef struct  s_rect
 
 int     ft_strlen(char *str);
 int     ft_putstr(char *str);
+void    ft_puttab(char **tab);
+int     ft_freetab(char **tab);
 int     get_zone(FILE *stream, t_zone *zone, char **draw);
-int     draw_zone(char **draw, t_zone zone);
-int     get_rect(FILE *stream, t_rect *rect, char **draw);
-int     draw_rect(char **draw, t_rect rect);
-
+int     draw_zone(t_zone zone, char **draw);
+int     get_rect(FILE *stream, t_zone *zone, char **draw, t_rect *rect);
+void     draw_rect(t_zone *zone, char **draw, t_rect *rect);
 
 
 #endif
