@@ -22,6 +22,8 @@ void    draw_rect(t_zone *zone, char **draw, t_rect *rect)
     int j;
     int ret;
 
+    printf("%d\n", zone->h);
+    printf("%d\n", zone->w);
     i = 0;
     while (i < zone->h)
     {
@@ -29,7 +31,7 @@ void    draw_rect(t_zone *zone, char **draw, t_rect *rect)
         while (j < zone->w)
         {
             ret = ft_is_in(j, i, *(rect));
-            if (ret == 0 || (ret = 1 && rect->type == 'R'))
+            if (ret == 0 || (ret == 1 && rect->type == 'R'))
                 draw[i][j] = rect->c;
             j++;
         }
@@ -47,16 +49,18 @@ int     get_rect(FILE *stream, t_zone *zone, char **draw, t_rect *rect)
     while ((ret = fscanf(stream, "%c%c %f %f %d %d %c", &n, &rect->type, 
             &rect->x, &rect->y, &rect->w, &rect->h, &rect->c)) == 7)
     {
-        if ((rect->type != 'r' || rect->type != 'R') || (rect->h <= 0.0 ||
+        if ((rect->type != 'r' && rect->type != 'R') || (rect->h <= 0.0 ||
             rect->w <= 0.0 || n != '\n' || rect->c == 0 || rect->c == '\n'))
             return (ft_freetab(draw));
         draw_rect(zone, draw, rect);
         rect->type = 0;
     }
     if (rect->type != 0 && ret != -1)
-		return (ft_freetab(draw));
+	{	printf("error\n");
+        return (ft_freetab(draw));}
 	ft_puttab(draw);
 	ft_freetab(draw);
+    printf("wtf\n");
 	return (0);
 }
 
@@ -120,9 +124,12 @@ int     main(int argc, char **argv)
     if (!(stream = fopen(argv[1], "r")))
         return (ft_putstr("Error: Operation file corrupted\n"));
     if (get_zone(stream, &zone, draw) == 1)
-        return (ft_putstr("Error: Operation file corrupted\n"));
+    {
+        printf("zone failed\n");
+        return (ft_putstr("Error: Operation file corrupted\n"));}
     if (get_rect(stream, &zone, draw, &rect) == 1)
-        return (ft_putstr("Error: Operation file corrupted\n"));
+    {   printf("rect failed\n");
+        return (ft_putstr("Error: Operation file corrupted\n"));}
     fclose(stream);
     return (0);
 }
