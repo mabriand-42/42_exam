@@ -26,7 +26,7 @@ void	ft_puttab(char **tab)
 	{
 		ft_putstr(tab[i]);
 		write(1, "\n", 1);
-		++i;
+		i++;
 	}
 }
 
@@ -38,7 +38,7 @@ int		ft_freetab(char **tab)
 	while (tab[i])
 	{
 		free(tab[i]);
-		++i;
+		i++;
 	}
 	free(tab);
 	return (1);

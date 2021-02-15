@@ -19,8 +19,8 @@ typedef struct  s_rect
     char    type;
     float   x;
     float   y;
-    int     w;
-    int     h;
+    float   w;
+    float   h;
     char    c;
 }               t_rect;
 
@@ -28,7 +28,7 @@ int     ft_strlen(char *str);
 int     ft_putstr(char *str);
 void    ft_puttab(char **tab);
 int     ft_freetab(char **tab);
-int     get_zone(FILE *stream, t_zone *zone, char **draw);
+int     get_zone(FILE *stream, t_zone *zone, char ***draw);
 int     draw_zone(t_zone zone, char **draw);
 int     get_rect(FILE *stream, t_zone *zone, char **draw, t_rect *rect);
 void     draw_rect(t_zone *zone, char **draw, t_rect *rect);

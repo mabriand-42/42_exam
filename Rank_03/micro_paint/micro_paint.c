@@ -22,8 +22,6 @@ void    draw_rect(t_zone *zone, char **draw, t_rect *rect)
     int j;
     int ret;
 
-    printf("%d\n", zone->h);
-    printf("%d\n", zone->w);
     i = 0;
     while (i < zone->h)
     {
@@ -46,8 +44,8 @@ int     get_rect(FILE *stream, t_zone *zone, char **draw, t_rect *rect)
     int     ret;
     char    n;
     
-    while ((ret = fscanf(stream, "%c%c %f %f %d %d %c", &n, &rect->type, 
-            &rect->x, &rect->y, &rect->w, &rect->h, &rect->c)) == 7)
+    while ((ret = fscanf(stream, "%c%c %f %f %f %f %c", &n, &rect->type, 
+    &rect->x, &rect->y, &rect->w, &rect->h, &rect->c)) == 7)
     {
         if ((rect->type != 'r' && rect->type != 'R') || (rect->h <= 0.0 ||
             rect->w <= 0.0 || n != '\n' || rect->c == 0 || rect->c == '\n'))
@@ -56,11 +54,9 @@ int     get_rect(FILE *stream, t_zone *zone, char **draw, t_rect *rect)
         rect->type = 0;
     }
     if (rect->type != 0 && ret != -1)
-	{	printf("error\n");
-        return (ft_freetab(draw));}
+        return (ft_freetab(draw));
 	ft_puttab(draw);
 	ft_freetab(draw);
-    printf("wtf\n");
 	return (0);
 }
 
@@ -72,28 +68,28 @@ int     draw_zone(t_zone zone, char **draw)
 
     if (!draw)
 		return (1);
-    j = 0;
-    while (j < zone.h)
+    i = 0;
+    while (i < zone.h)
     {
-        i = 0;
-        if (!(draw[j] = (char *)malloc(sizeof(char) * zone.w + 1)))
+        j = 0;
+        if (!(draw[i] = (char *)malloc(sizeof(char) * zone.w + 1)))
             return(1);
         else
         {
-            while (i < zone.w)
+            while (j < zone.w)
             {
-                draw[j][i] = zone.back;
-                i++;
+                draw[i][j] = zone.back;
+                j++;
             }
-            draw[j][i] = '\0';
+            draw[i][j] = '\0';
         }
-        j++;
+        i++;
     }
     return (0);
 }
 
 
-int     get_zone(FILE *stream, t_zone *zone, char **draw)
+int     get_zone(FILE *stream, t_zone *zone, char ***draw)
 {
     int ret;
 
@@ -101,10 +97,10 @@ int     get_zone(FILE *stream, t_zone *zone, char **draw)
     if (zone->h <= 0 || zone->h > 300 || zone->w <= 0 || zone->w > 300 ||
         zone->back == 0 || zone->back == '\n' || ret != 3)
         return (1);
-    if (!(draw = (char **)malloc(sizeof(char *) * zone->h + 1)))
+    if (!(*draw = (char **)malloc(sizeof(char *) * zone->h + 1)))
         return (1);
-    if (draw_zone(*zone, draw) == 1)
-        return (ft_freetab(draw));
+    if (draw_zone(*zone, *draw) == 1)
+        return (ft_freetab(*draw));
     return (0);
 }
 
@@ -116,20 +112,16 @@ int     main(int argc, char **argv)
     t_rect  rect;
     char    **draw;
 
-    draw = (char **)malloc(sizeof(char *) * (zone.h + 1));
+    draw = NULL;
 	rect.type = 0;
-
     if (argc != 2)
         return (ft_putstr("Error: argument\n"));
     if (!(stream = fopen(argv[1], "r")))
         return (ft_putstr("Error: Operation file corrupted\n"));
-    if (get_zone(stream, &zone, draw) == 1)
-    {
-        printf("zone failed\n");
-        return (ft_putstr("Error: Operation file corrupted\n"));}
+    if (get_zone(stream, &zone, &draw) == 1)
+        return (ft_putstr("Error: Operation file corrupted\n"));
     if (get_rect(stream, &zone, draw, &rect) == 1)
-    {   printf("rect failed\n");
-        return (ft_putstr("Error: Operation file corrupted\n"));}
+        return (ft_putstr("Error: Operation file corrupted\n"));
     fclose(stream);
     return (0);
 }
