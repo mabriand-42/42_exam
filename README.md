@@ -13,6 +13,3 @@ one to revise, you can waste a lot of time waiting for this subject to come. How
 
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-c.svg)](https://forthebadge.com)
-[![forthebadge](https://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com)
-[![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)](https://forthebadge.com)
-[https://img.shields.io/badge/SCORE-100%25%20%3A%20SUCCESS-brightgreen]
