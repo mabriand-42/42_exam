@@ -30,8 +30,8 @@ void    ft_puttab(char **tab);
 int     ft_freetab(char **tab);
 int     get_zone(FILE *stream, t_zone *zone, char ***draw);
 int     draw_zone(t_zone zone, char **draw);
-int     get_rect(FILE *stream, t_zone *zone, char **draw, t_rect *rect);
-void     draw_rect(t_zone *zone, char **draw, t_rect *rect);
+int     get_rect(FILE *stream,  t_rect *rect, char **draw);
+void    draw_rect(t_rect rect, char **draw);
 
 
 #endif
